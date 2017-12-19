@@ -17,7 +17,7 @@ public class Engineer extends Professions {
         super(name, age, expirience);
     }
 
-    public String repair(Professions professions){
+    public String repair(Professions professions) {
         return "Все исправлено";
     }
 }
