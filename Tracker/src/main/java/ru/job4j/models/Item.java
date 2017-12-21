@@ -7,12 +7,12 @@ public class Item {
 	public long create;
 	private String id;
 
-	public Item(String name, String description, long create) {
+	public Item(String name, String description, long create) { // constructor
 		this .name = name;
 		this.description = description;
 		this.create = create;
 	}
-	public Item() { }
+	public Item() { }  // конструктор без параметров по умолчанию
 
 	public String getName() {
 		return this.name;
