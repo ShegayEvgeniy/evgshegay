@@ -6,7 +6,7 @@ import java.util.*;
 public class Tracker {
 	
 	private Item[]items = new Item[100];
-	private  static  int position = 0;
+	private    int position = 0;
 	private static final Random RN = new Random();
 
 	
@@ -18,15 +18,13 @@ public class Tracker {
 		return item;
 	}
 	
-	public Item[] replace(String id, Item item) {
-		for (int i = 0; i < items.length; i++) {
-			if (i < position) {
+	public Item[] replace(String id, Item item) {  //редактируем заявку
+		for (int i = 0; i < position; i++) {
+
 				if (id.equals(items[i].getId())) {
 					this.items[i] = item;
 				}
-			} else if (i == position) {
-			   break;
-			}
+
 		}
 		return items;
 	}
@@ -37,15 +35,15 @@ public class Tracker {
 
 		for (Item item : items) {
 			if (item.getId().equals(id)) {
-				Item[]tmp = new Item[100];
-						System.arraycopy(items, 1, tmp, 0, 1);
-						System.arraycopy(tmp, 0, items, 0, 1);
-                        position--;
-                        break;
-				}
+				Item[] tmp = new Item[100];
+				System.arraycopy(items, 1, tmp, 0, 1);
+				System.arraycopy(tmp, 0, items, 0, 1);
+				position--;
+				break;
 			}
-
+		}
 	}
+
 	
 	public Item[] findAll(Item[] items) {   // возвращает копию массива без пустых элементов
 		 int i = 0;
@@ -93,11 +91,11 @@ public class Tracker {
 		return String.valueOf(RN.nextInt(100));
 	}
 	
-	public Item[] getAll() {
+	public Item[] getAll() {  // показываем все заполненные ячейки
 
-		 Item [] result = new Item[position++];
+		 Item [] result = new Item[position];
 
-		for (int index = 0; index != position++; index++) {
+		for (int index = 0; index < result.length; index++) {
 			result[index] = items[index];
 		}
 		return result;

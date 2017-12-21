@@ -1,7 +1,7 @@
 
 package ru.job4j.start;
 import ru.job4j.models.Item;
-import ru.job4j.start.Input;
+
 
 
 public class StartUI {
@@ -67,52 +67,50 @@ public class StartUI {
 		Item item = new Item(name,desc,1);
 		Item result = tracker.add(item);
 		System.out.println("Заявка  " + result.getName() + "  создана");
-		
 	}
 	
 	public void edit() {
 		System.out.println("Редактирование заявки");
 		String name = input.ask("Введите имя редактируемой завки");
-		Tracker tracker = new Tracker();
 		Item[] edit2 = tracker.findByName(name);
 		String name1 = input.ask("Введите имя новой заяки");
 		String desc = input.ask("Введите описание новой заявки");
-		Item item = new Item(name,desc,2);
+		Item item = new Item(name1,desc,2);
 		for(Item item1:edit2){
 			if((item1.getName()).equals(name)) {
 				Item [] result = tracker.replace((item1.getId()),item);
+				break;
 			}
 		}
-
-		System.out.println("Заявка" +item.getName() + " отредактирована");
-		
+		System.out.println("Заявка  " +item.getName() + "   отредактирована");
 	}
 	
 	public void delete() {
 		System.out.println("Удаляем заявку");
 		String name = input.ask("Введите имя удаляемой заявки");
-		Tracker tracker = new Tracker();
 		Item[] find = tracker.findByName(name);
 		for (Item item1 : find) {
 			if ((item1.getName()).equals(name)) {
 				tracker.delete(item1.getId());
-
-
 				System.out.println("Заявка " + item1.getName() + " удалена");
+				break;
+
+
+
 			}
+
 		}
 	}
 	
 	public void findById(){
 			System.out.println("Поиск объекта по его id");  //поиск идет через имя заявки тк клиент не знает id заявки
 			String name = input.ask("Введите имя объекта");
-			Tracker tracker1 = new Tracker();
 			Item[] find1 = tracker.findByName(name);
 			for (Item item1 : find1) {
 				if ((item1.getName()).equals(name)) {
 					Item result = tracker.findById(item1.getId());
-
-					System.out.println("Заявка" + result.getName() + "найдена");
+					System.out.println("Заявка  " + result.getName() + "  найдена");
+					break;
 				}
 			}
 	}
@@ -120,27 +118,21 @@ public class StartUI {
 	public void Name() {
 		System.out.println("Поиск объекта по его имени");
 		String name = input.ask("Введите имя объекта");
-		Tracker tracker = new Tracker();
 		Item[] find = tracker.findByName(name);
 		for (Item item1 : find) {
 			if ((item1.getName()).equals(name)) {
-
-				System.out.println("Заявка" + item1.getName() + "найдена");
-
+				System.out.println("Заявка  " + item1.getName() + "  найдена");
+                break;
 			}
 		}
 	}
 	
 	public void show() {
 		System.out.println("Вывод всех заявок" );
-		Tracker tracker = new Tracker();
-
 		 Item [] array = tracker.getAll();
 		for(int i = 0; i < array.length; i++) {
 			System.out.println(array[i]);
 		}
-			
-		
 	}
 	
 	public static void main(String[]args) {
@@ -155,7 +147,4 @@ public class StartUI {
 		
 		
 	}
-	
-	
-	
 }
