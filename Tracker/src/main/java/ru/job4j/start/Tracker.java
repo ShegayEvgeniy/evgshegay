@@ -6,13 +6,15 @@ import java.util.*;
 public class Tracker {
 	
 	private Item[]items = new Item[100];
-	private int position = 0;
+	private  static  int position = 0;
 	private static final Random RN = new Random();
+
 	
 	public Item add(Item item) {  //добавление заявки
 
 		item.setId(this.generateId());
-		this.items [position++] = item;
+		this.items [position] = item;
+		position++;
 		return item;
 	}
 	
@@ -87,14 +89,16 @@ public class Tracker {
 		return result;
 	}
 
-	String generateId() {  // генерируем id
+	public String generateId() {  // генерируем id
 		return String.valueOf(RN.nextInt(100));
 	}
 	
 	public Item[] getAll() {
-		Item[] result = new Item[this.position];
-		for (int index = 0; index != this.position; index++) {
-			result[index] = this.items[index];
+
+		 Item [] result = new Item[position++];
+
+		for (int index = 0; index != position++; index++) {
+			result[index] = items[index];
 		}
 		return result;
 	}
