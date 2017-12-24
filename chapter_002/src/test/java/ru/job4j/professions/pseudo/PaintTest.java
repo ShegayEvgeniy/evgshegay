@@ -6,22 +6,31 @@ import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import org.junit.After;
+import org.junit.Before;
 
 
 public class PaintTest {
+    //поле содержит дефолтный вывод в консоль
+    private final PrintStream stdout = System.out;
+    //буфер для результата
+    private final ByteArrayOutputStream out = new ByteArrayOutputStream();
+    @Before
+    public void loadOutput() {
+        System.setOut(new PrintStream(this.out));
+    }
+    @After
+    public void backOutput() {
+        System.setOut(this.stdout);
+    }
+
+
 
     @Test
     public void whenDrawSquare() {
         String ln = System.lineSeparator();
-        // получаем ссылку на стандартный вывод в консоль.
-        PrintStream stdout = System.out;
-        // Создаем буфур для хранения вывода.
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        //Заменяем стандартный вывод на вывод в пямять для тестирования.
-        System.setOut(new PrintStream(out));
-        // выполняем действия пишушиее в консоль.
+        this.loadOutput();
         new Paint().draw(new Square());
-        // проверяем результат вычисления
         assertThat(new String(out.toByteArray()), is(new StringBuilder()
         .append("+ + + + +")
         .append(ln)
@@ -37,16 +46,13 @@ public class PaintTest {
 
         )
         );
-        // возвращаем обратно стандартный вывод в консоль.
-        System.setOut(stdout);
+       this.backOutput();
     }
 
     @Test
     public void whenDrawTriangle() {
         String ln = System.lineSeparator();
-        PrintStream stdout = System.out;
-        ByteArrayOutputStream out = new ByteArrayOutputStream();
-        System.setOut(new PrintStream(out));
+        this.loadOutput();
         new Paint().draw(new Triangle());
         assertThat(new String(out.toByteArray()), is(new StringBuilder()
         .append("  +  ")
@@ -59,8 +65,6 @@ public class PaintTest {
 
         )
         );
-        System.setOut(stdout);
-
+       this.backOutput();
     }
-
 }
