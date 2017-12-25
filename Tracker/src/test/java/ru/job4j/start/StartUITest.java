@@ -5,8 +5,20 @@ import org.junit.Test;
 import ru.job4j.models.Item;
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
+import java.io.ByteArrayOutputStream;
+import java.io.PrintStream;
+import org.junit.After;
+import org.junit.Before;
+
 
 public class StartUITest {
+
+   public Tracker createAndAdd(Item item) { //метод который используется при рефакторинге метода
+       // whenAddItemAndShowItemByName и whenAddItemAndEditItem
+       Tracker tracker = new Tracker();
+       tracker.add(item);
+       return tracker;
+   }
 
     @Test
     public void whenUserAddItemThenTrackerHasNewItemWithSameName() {
@@ -68,7 +80,28 @@ public class StartUITest {
 
     }
 
-    //тест , который проверяет вывод всех объектов не делал . Тк в условии сказано ,
-    // что его будем делать в следующем задании
+    @Test
+    public void whenAddItemAndEditItem() {
+
+        Item item = new Item("name2", "desc2", 2);
+        Item item2 = new Item("name3", "desc3", 3);
+        this.createAndAdd(item);
+        String[] two = {"2", "name2", "name3", "desc3"};
+        Input input = new StubInput(two);
+        new StartUI(input, this.createAndAdd(item)).init();
+        assertThat(this.createAndAdd(item2).getAll()[0].getName(), is("name3"));
+
+    }
+
+    @Test
+    public void whenAddItemAndShowItemByName() {
+
+        Item item = new Item("name2", "desc2", 9);
+        String[] seven  = {"5", "name2"};
+        Input input = new StubInput(seven);
+        new StartUI(input, this.createAndAdd(item)).init();
+        assertThat(this.createAndAdd(item).getAll()[0].getName(), is("name2"));
+
+    }
 
 }
