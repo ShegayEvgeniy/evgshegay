@@ -1,3 +1,5 @@
+
+
 package ru.job4j.start;
 
 
@@ -25,7 +27,7 @@ public class StartUITest {
         Tracker tracker = new Tracker();
         String[]one = {"0", "name1", "desc1", "1"};
         Input input = new StubInput(one);
-        new StartUI(input, tracker).init();
+        new StartUI(input).init();
         assertThat(tracker.getAll()[0].getName(), is("name1"));
     }
 
@@ -37,7 +39,7 @@ public class StartUITest {
         Item item2 = new Item("name3", "desc3", 3);
         String[] two = {"2", "name2", "name3", "desc3"};
         Input input = new StubInput(two);
-        new StartUI(input, tracker).init();
+        new StartUI(input).init();
         assertThat(tracker.getAll()[0].getName(), is("name3"));
 
     }
@@ -51,7 +53,7 @@ public class StartUITest {
         tracker.add(item2);
         String[] three = {"3", "name4"};
         Input input1 = new StubInput(three);
-        new StartUI(input1, tracker).init();
+        new StartUI(input1).init();
         assertThat(tracker.getAll()[0].getName(), is("name5"));
 
     }
@@ -63,7 +65,7 @@ public class StartUITest {
         tracker.add(item);
         String[] four = {"4", "name6", item.getId()};
         Input input = new StubInput(four);
-        new StartUI(input, tracker).init();
+        new StartUI(input).init();
         assertThat(tracker.getAll()[0].getName(), is("name6"));
 
     }
@@ -75,7 +77,7 @@ public class StartUITest {
         tracker.add(item);
         String[] five = {"5", "name7"};
         Input input = new StubInput(five);
-        new StartUI(input, tracker).init();
+        new StartUI(input).init();
         assertThat(tracker.getAll()[0].getName(), is("name7"));
 
     }
@@ -88,7 +90,7 @@ public class StartUITest {
         this.createAndAdd(item);
         String[] two = {"2", "name2", "name3", "desc3"};
         Input input = new StubInput(two);
-        new StartUI(input, this.createAndAdd(item)).init();
+        new StartUI(input).init();
         assertThat(this.createAndAdd(item2).getAll()[0].getName(), is("name3"));
 
     }
@@ -99,9 +101,10 @@ public class StartUITest {
         Item item = new Item("name2", "desc2", 9);
         String[] seven  = {"5", "name2"};
         Input input = new StubInput(seven);
-        new StartUI(input, this.createAndAdd(item)).init();
+        new StartUI(input).init();
         assertThat(this.createAndAdd(item).getAll()[0].getName(), is("name2"));
 
     }
 
 }
+

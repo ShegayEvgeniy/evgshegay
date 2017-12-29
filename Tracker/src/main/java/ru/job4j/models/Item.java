@@ -15,6 +15,7 @@ public class Item {
 	public Item() { }  // конструктор без параметров по умолчанию
 
 	public String getName() {
+
 		return this.name;
 	}
 

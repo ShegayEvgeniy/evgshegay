@@ -17,6 +17,17 @@ public class Tracker {
 		position++;
 		return item;
 	}
+
+    public void edit(Item fresh) {
+         for (int index = 0; index < items.length; index++) {
+          Item item = items[index];
+           if (item != null && item.getId().equals(fresh.getId())) {
+             items[index] = fresh;
+              break;
+            }
+          }
+
+    }
 	
 	public Item[] replace(String id, Item item) {  //редактируем заявку
 		for (int i = 0; i < position; i++) {
@@ -93,7 +104,7 @@ public class Tracker {
 	
 	public Item[] getAll() {  // показываем все заполненные ячейки
 
-		 Item [] result = new Item[position];
+		 Item[] result = new Item[position];
 
 		for (int index = 0; index < result.length; index++) {
 			result[index] = items[index];
