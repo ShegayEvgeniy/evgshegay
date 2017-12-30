@@ -54,6 +54,11 @@ public class MenuTracker {
 	
 	private Input input;
 	private Tracker tracker;
+
+	public UserAction[] getActions() {
+		return actions;
+	}
+
 	private UserAction[] actions = new UserAction[6]; //массив содержит данные о том какие дейсвия может совершить
 	                                                    //пользователь
 	
@@ -61,8 +66,10 @@ public class MenuTracker {
 		this.input = input;
 		this.tracker = tracker;
 	}
-	
-	
+
+	public MenuTracker() {
+	}
+
 	public void fillActions() {       //метод создает события
 		this.actions[0] = this.new AddItem(); //создаем экземпляр внутреннего не статичного класса
 		this.actions[1] = new MenuTracker.ShowItems(); //создаем экземпляр внутреннего статичного класса
