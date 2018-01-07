@@ -1,81 +1,65 @@
 package ru.job4j.start;
 
-/*2. Создать абстрактный класс Figure - этот класс будет описывать абстрактное поведение шахматной доски.
+public class Board  {
 
-        2. В Figure сделать поле final Cell position - и конструктор. В классе не должно быть методов set get.
-        Cell - описывает ячейки шахматной доски. Содержит координаты x, y. Cell не может содержать объект Figure.
-        Важно, что position объявлена final = изменения координаты будет происходить за счет пересоздания объекта.
-        Про это рассказано ниже.
+  //  В данном классе реализовал движение слона из левого нижнего угла доски в правый верхний угол
 
-        3. Добавить в класс Figure абстрактный метод Cell[] way(Cell source, Cell dest) throw ImposibleMoveException
+    public static Figure[][] figures = new Figure[8][8];
+    private static   Cell source = new Cell(1, 1);
+    private static Cell dest = new Cell(8, 8);
+    private static Figure elephant = new Elephant(source);
 
-        Метод должен работать так. dest - задают ячейку куда следует пойти. Если фигура может туда пойти. то Вернуть массив ячеек. которые должна пройти фигура.
-
-        Если фигура туда пойти не может. выбросить исключение ImposibleMoveException
-
-        4. Добавьте абстрактный метод Figure Figure.copy(Cell dest) - он должен создавать объект Figure с координатой Cell dest.
-        Например. для класса
-class Bishop impl Figure {
-    Figure copy(Cell dest) {
-        return new Bishop(dest);
-    }
-}
-
-5. Создать класс Board.
-
-        6. В классе создать массив Figure[][] figures = new Figure[8][8] - содержит фигуры. Клетки доски.
-
-        7. Добавить метод boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException
-
-        8. Метод должен проверить
-        - Что в заданной ячейки есть фигура. если нет. то выкинуть исключение
-        - Если фигура есть. Проверить может ли она так двигаться. Если нет то упадет исключение
-        - Проверить что полученный путь. не занят фигурами. Если занят выкинуть исключение
-        - Если все отлично. Записать в ячейку новое новое положение Figure figure.copy(Cell dest)
-
-        9. Изначально сделайте. только движения фигуры слон и покажите промежуточный результат.*/
-
-
-public class Board extends Figure {
-
-
-    private Figure[][] figures = new Figure[8][8];
-
-    public Board(Cell position) {
-        super(position);
+    public void fillFigures() {
+        figures[0][7] = elephant; //добавили слона в массив
     }
 
-  /*  Добавить метод boolean move(Cell source, Cell dest) throws ImpossibleMoveException, OccupiedWayException, FigureNotFoundException
 
-8. Метод должен проверить
-   - Что в заданной ячейки есть фигура. если нет. то выкинуть исключение
-   - Если фигура есть. Проверить может ли она так двигаться. Если нет то упадет исключение
-   - Проверить что полученный путь. не занят фигурами. Если занят выкинуть исключение
-   - Если все отлично. Записать в ячейку новое новое положение Figure figure.copy(Cell dest)
 
-9. Изначально сделайте. только движения фигуры слон и покажите промежуточный результат.*/
+    public Cell coordinat() { // данный метод проверяте есть ли в массиве под этим индексом объект слон
+        try {
+            if (figures[0][7] == null) {
+                throw new FigureNotFoundException("The figure is eempty");
+            }
+        } catch (FigureNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        if (figures[0][7] == elephant) {
+            System.out.println("В данной ячейке есть фигура Слон. Ее координаты  такие - " + source.coordX() + " " + source.coordY());
+        }
+        return source;
+    }
+
+
+
+    public Board() {
+        super();
+    }
+
 
     public boolean move(Cell source, Cell dest) {
 
-
+         boolean test = false;
+         Cell[]test2 = null;
+         try {
+             test2 = elephant.way(source, dest);
+             test = true;
+         } catch (ImposibleMoveException e) {
+             e.printStackTrace();
+         } catch (OccupiedWayException o) {
+             o.printStackTrace();
+         }
+        System.out.println(test);
+        return test;
     }
 
 
-    // Метод должен работать так. dest - задают ячейку куда следует пойти. Если фигура может туда пойти. то Вернуть массив ячеек. которые должна пройти фигура.
-
-    // Если фигура туда пойти не может. выбросить исключение ImposibleMoveException
-
-    @Override
-    public Cell[] way(Cell source, Cell dest) {
-        return new Cell[0];
-    }
-
-
-    // метод создает новый объект Figure с координатами Cell dest
-
-
-    @Override
-    public Figure copy(Cell dest) {
-        return new Board(dest);
+    public static void main(String[] args) throws FigureNotFoundException, OccupiedWayException, ImposibleMoveException {
+        Board board = new Board();
+        board.fillFigures();
+        board.coordinat();
+        board.move(source, dest);
+        elephant.copy(dest);
+        System.out.println("Фигура перемещена в ячейку по координатм  Cell dest " + dest.coordX() + " " + dest.coordY());
     }
 }
