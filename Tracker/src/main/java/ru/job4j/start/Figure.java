@@ -1,5 +1,5 @@
 package ru.job4j.start;
-
+// Абстрактный класс на его основе создаем другие фигуры
 
 public abstract class Figure  {
 

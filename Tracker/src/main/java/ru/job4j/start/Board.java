@@ -2,7 +2,7 @@ package ru.job4j.start;
 
 public class Board  {
 
-  //  В данном классе реализовал движение слона из левого нижнего угла доски в правый верхний угол
+  //  В данном классе реализовал движение слона из левого нижнего угла доски в правый верхний угол шахматной доски
 
     public static Figure[][] figures = new Figure[8][8];
     private static   Cell source = new Cell(1, 1);

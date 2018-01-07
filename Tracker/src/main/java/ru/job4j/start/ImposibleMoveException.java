@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+//Класс реализует собственное исключение
+
 public class ImposibleMoveException extends Exception {
     public ImposibleMoveException() {
     }

@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+//Класс создает фигуру слон
+
 import static ru.job4j.start.Board.figures;
 
 public class Elephant extends Figure {
