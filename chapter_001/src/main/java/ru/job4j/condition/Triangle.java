@@ -1,14 +1,16 @@
 package ru.job4j.condition;
-import java.awt.*;
+
 
 public class Triangle {
    private Point a;
    private Point b;
    private Point c;
-   private Point left;
-   private Point right;
-   private  double per;
-    double area2;
+   private double summ;
+   private double ab;
+   private double ac;
+   private double bc;
+   private  double result = 0.0;
+
 
    public Triangle(Point a, Point b, Point c) {
        this.a = a;
@@ -16,63 +18,40 @@ public class Triangle {
        this.c = c;
     }
 
-    public Triangle(Point left, Point right) {
-
-       this.left = left;
-       this .right = right;
-    }
-
-    public double distance2(Point left, Point right) {
-         int x3 = left.x;
-         int y3 = left.y;
-         int x4 = right.x;
-         int y4 = right.y;
-
-        double result = Math.sqrt(Math.pow(x4 - x3, 2) + Math.pow(y4 - y3, 2));
-
-        return result;
-
-    }
-	
-	public double distance(Point left, Point right) {
-    
-	int x1 = a.x;
-	int y1 = a.y;
-	int x2 = b.x;
-	int y2 = b.y;
-
-	
-	double result = Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
-	
-	return result;
-	
-	
-    }
 	
 	public double period(double ab, double ac, double bc) {
 		
-		double result = (ab + ac + bc) / 2;
-		 per = result;
-         return  result;
+		ab = a.distanceTo(a, b);
+		ac = a.distanceTo(a, c);
+		bc = a.distanceTo(b, c);
+		 summ = (ab + ac + bc) / 2;
+		return summ;
     }
 	
 	public double area() {
-        double rsl = -1;
-        double ab = this.distance(this.a, this.b);
-        double ac = this.distance(this.a, this.c);
-        double bc = this.distance(this.b, this.c);
-        double p = this.period(ab, ac, bc);
-            if (this.exist(ab, ac, bc)) {
-              double result = Math.sqrt(per * (per - ab) * (per - ac) * (per - bc));
-               area2 = result;
-            } else {
-             return rsl;
-            }
-            return area2;
+       if (exist(ab, ac, bc)) {
+           double rsl = -1;
+           if (summ > 0) {
+               double squareTriangle = Math.sqrt(summ * (summ - ab) * (summ - bc) * (summ - ac));
+               result = squareTriangle;
+           } else {
+               result = rsl;
+           }
+
+       }
+        return result;
 	}
 
     private boolean exist(double ab, double ac, double bc) {
-		return true;
+       boolean test = false;
+       ab = a.distanceTo(a, b);
+       ac = a.distanceTo(a, c);
+       bc = b.distanceTo(b, c);
+       summ = (ab + ac + bc) / 2;
+       if (ab > 0 || ac > 0 || bc > 0) {
+           test = true;
+       }
+		return test;
 	}
 	
 }
