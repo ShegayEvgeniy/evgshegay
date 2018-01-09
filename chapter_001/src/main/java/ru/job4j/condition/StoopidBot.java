@@ -19,13 +19,13 @@ public class StoopidBot {
 	
 	public String answer(String question) {
 
-		if (question == a) {
+		if (question.equals(a)) {
 			g = b;
 		}
-		if  (question == c) {
+		if  (question.equals(c)) {
 			g = d;
 		}
-		if (question == e) {
+		if (question.equals(e)) {
 			g = h;
 		}
 		return g;
