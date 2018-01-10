@@ -4,12 +4,12 @@ import ru.job4j.models.Item;
 import ru.job4j.models.Task;
 
 
-class EditItem implements  UserAction {
+class EditItem extends BaseAction {
 
-        public int key() {
-			return 2;
-		}
-		
+	protected EditItem(int key, String name) {
+		super(key, name);
+	}
+
 		public void execute(Input input, Tracker tracker) {
 			String id = input.ask("Please,enter the task id");
 			String name =  input.ask("Please enter the new name");
@@ -19,23 +19,16 @@ class EditItem implements  UserAction {
             tracker.edit(task);
             
 		}
-		
-		public String info() {
-			return String.format("%s. %s", this.key(), "Edit the new item");
-			
-		}
-
-
-
 }
 
-  class FindItemById  implements  UserAction {
+  class FindItemById  extends BaseAction {
 
 
-	  @Override
-	  public int key() {
-		  return 5;
+	  protected FindItemById(int key, String name) {
+		  super(key, name);
 	  }
+
+
 
 	  @Override
 	  public void execute(Input input, Tracker tracker) {
@@ -44,24 +37,22 @@ class EditItem implements  UserAction {
       System.out.println("task found by id  " + tmp.getName());
 	  }
 
-	  @Override
-	  public String info() {
-		  return  String.format("%s. %s", this.key(), "Find by id");
-	  }
+
   }
 
 public class MenuTracker {
-	
+
 	private Input input;
 	private Tracker tracker;
+	private int position = 0;
 
 	public UserAction[] getActions() {
 		return actions;
 	}
 
-	private UserAction[] actions = new UserAction[6]; //массив содержит данные о том какие дейсвия может совершить
+	private UserAction[] actions = new UserAction[8]; //массив содержит данные о том какие дейсвия может совершить
 	                                                    //пользователь
-	
+
 	public MenuTracker(Input input, Tracker tracker) {
 		this.input = input;
 		this.tracker = tracker;
@@ -70,20 +61,25 @@ public class MenuTracker {
 	public MenuTracker() {
 	}
 
-	public void fillActions() {       //метод создает события
-		this.actions[0] = this.new AddItem(); //создаем экземпляр внутреннего не статичного класса
-		this.actions[1] = new MenuTracker.ShowItems(); //создаем экземпляр внутреннего статичного класса
-        this.actions[2] = new EditItem(); // создаем экземпляр внешнего класса
-		this.actions[3] = this.new DeleteItem(); //внутренний не статичный класс
-		this.actions[4] = new MenuTracker.FindItemByName(); //static class
-		this.actions[5] = new FindItemById(); //внешний класс
+	public void addActions(UserAction action) {
+		this.actions[position++] = action;
 	}
-   
+
+	public void fillActions() {       //метод создает события
+		this.actions[position++] = this.new AddItem(0, "Add new item"); //создаем экземпляр внутреннего не статичного класса
+		this.actions[position++] = new MenuTracker.ShowItems(1, "Show all items"); //создаем экземпляр внутреннего статичного класса
+        this.actions[position++] = new EditItem(2, "Edit item"); // создаем экземпляр внешнего класса
+		this.actions[position++] = this.new DeleteItem(3, "Delete item"); //внутренний не статичный класс
+		this.actions[position++] = new MenuTracker.FindItemByName(4, "Find item by name"); //static class
+		this.actions[position++] = new FindItemById(5, "Find item by id"); //внешний класс
+		this.actions[position++] = this.new DeleteItem(3, "Delete item");
+	}
+
     public void select(int key) {  //метод выполняет наши действия оторые выбрал пользователь
      this.actions[key].execute(this.input, this.tracker);
 
      }
-	
+
 	public void show() { //метод печатает меню
 		for (UserAction action : this.actions) {
           if (action != null) {
@@ -92,13 +88,14 @@ public class MenuTracker {
         }
 	}
 
-	private class DeleteItem implements UserAction {
+	private class DeleteItem extends BaseAction {
 
 
-		@Override
-		public int key() {
-			return 3;
+		protected DeleteItem(int key, String name) {
+			super(key, name);
 		}
+
+
 
 		@Override
 		public void execute(Input input, Tracker tracker) {
@@ -111,56 +108,48 @@ public class MenuTracker {
 			}
 		}
 
-		@Override
-		public String info() {
-			return String.format("%s. %s", this.key(), "Delete the  item");
-		}
 	}
-	
-	private class AddItem implements UserAction {  //внутренний класс может быть статичным и нет
-		
-		public int key() {
-			return 0;
+
+	private class AddItem extends BaseAction {
+
+		protected AddItem(int key, String name) {
+			super(key, name);
 		}
-		
+
+
 		public void execute(Input input, Tracker tracker) {
 			String name = input.ask("Please,enter the task name");
 			String desc =  input.ask("Please enter the task desc");
 			tracker.add(new Task(name, desc));
 		}
-		
-		public String info() {
-			return String.format("%s. %s", this.key(), "Add the new item");
-			
-		}
+
 	}
 
-     private static class ShowItems implements UserAction {  //внутренний класс может быть статичным и нет
-		
-		public int key() {
-			return 1;
-		}
-		
+     private static class ShowItems extends BaseAction {
+		 protected ShowItems(int key, String name) {
+			 super(key, name);
+		 }
+
+
+
 		public void execute(Input input, Tracker tracker) {
 			for (Item item : tracker.getAll()) {
             System.out.println(String.format("%s. %s", item.getId(), item.getName()));
 
             }
 		}
-		
-		public String info() {
-			return String.format("%s. %s", this.key(), "Show all items ");
-			
-		}
+
+
 	}
 
-	private static class FindItemByName implements UserAction {
+	private static class FindItemByName extends BaseAction {
 
 
-		@Override
-		public int key() {
-			return 4;
+		protected FindItemByName(int key, String name) {
+			super(key, name);
 		}
+
+
 
 		@Override
 		public void execute(Input input, Tracker tracker) {
@@ -173,10 +162,7 @@ public class MenuTracker {
 			}
 		}
 
-		@Override
-		public String info() {
-				return String.format("%s. %s", this.key(), " task found by name ");
-		}
+
 	}
 
 
