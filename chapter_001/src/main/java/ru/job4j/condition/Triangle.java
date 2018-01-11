@@ -1,5 +1,6 @@
 package ru.job4j.condition;
 
+//Исрпавленный вариант задачи треугольник
 
 public class Triangle {
    private Point a;
