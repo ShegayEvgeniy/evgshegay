@@ -19,7 +19,7 @@ public class Triangle {
     }
 
 	
-	public double period(double ab, double ac, double bc) {
+	public double period(Point a, Point b, Point c) {
 		
 		ab = a.distanceTo(a, b);
 		ac = a.distanceTo(a, c);
@@ -29,6 +29,7 @@ public class Triangle {
     }
 	
 	public double area() {
+       period(a,b,c);
        if (exist(ab, ac, bc)) {
            double rsl = -1;
            if (summ > 0) {
@@ -44,11 +45,7 @@ public class Triangle {
 
     private boolean exist(double ab, double ac, double bc) {
        boolean test = false;
-       ab = a.distanceTo(a, b);
-       ac = a.distanceTo(a, c);
-       bc = b.distanceTo(b, c);
-       summ = (ab + ac + bc) / 2;
-       if (ab > 0 || ac > 0 || bc > 0) {
+      if(ab < (ac + bc) && (ac < (ab + bc) && bc < (ab + ac))) {
            test = true;
        }
 		return test;
