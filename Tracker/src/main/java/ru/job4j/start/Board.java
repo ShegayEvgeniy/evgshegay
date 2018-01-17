@@ -4,62 +4,73 @@ public class Board  {
 
   //  В данном классе реализовал движение слона из левого нижнего угла доски в правый верхний угол шахматной доски
 
-    public static Figure[][] figures = new Figure[8][8];
-    private static   Cell source = new Cell(1, 1);
-    private static Cell dest = new Cell(8, 8);
-    private static Figure elephant = new Elephant(source);
+    private Cell source;
+    private Cell dest;
+    private  Figure[][] figures;
+    private Figure elephant;
 
-    public void fillFigures() {
-        figures[0][7] = elephant; //добавили слона в массив
+    public void fillFigures(int i, int j) {
+        figures[i][j] = elephant; //добавили слона в массив
+    }
+
+    public boolean testArray(Cell source) throws FigureNotFoundException {
+        int a = source.coordX();
+        int b = source.coordY();
+        boolean tmp = false;
+        if (figures[a][b] != null) {
+            tmp = true;
+        } else {
+            new  FigureNotFoundException();
+        }
+        return tmp;
+    }
+
+    public Board(Cell source, Cell dest, Figure[][] figures, Figure elephant) {
+        this.source = source;
+        this.dest = dest;
+        this.figures = figures;
+        this.elephant = elephant;
     }
 
 
+    public boolean move(Cell source, Cell dest)  {
 
-    public Cell coordinat() { // данный метод проверяте есть ли в массиве под этим индексом объект слон
+        int one = source.coordX();
+        int two = source.coordX();
+        Cell[]test = new Cell[8];
+        boolean testCondition = false;
+
         try {
-            if (figures[0][7] == null) {
-                throw new FigureNotFoundException("The figure is eempty");
+        if (testArray(source)) {
+            System.out.println(" ");
+        }
+        } catch (FigureNotFoundException f) {
+            System.out.println(" ");
             }
-        } catch (FigureNotFoundException e) {
-            e.printStackTrace();
+
+
+
+        try {
+             test = elephant.way(source, dest);
+        } catch (OccupiedWayException o) {
+            System.out.println("The way is occupied");
+        } catch (ImposibleMoveException i) {
+            System.out.println("The move is impossible");
+        }
+          for (Cell cell: test) {
+              if (cell == null) {
+                  elephant.copy(dest);
+                  testCondition = true;
+                  break;
+              }
+          }
+          return testCondition;
+
         }
 
-        if (figures[0][7] == elephant) {
-            System.out.println("В данной ячейке есть фигура Слон. Ее координаты  такие - " + source.coordX() + " " + source.coordY());
-        }
-        return source;
+
     }
 
 
 
-    public Board() {
-        super();
-    }
 
-
-    public boolean move(Cell source, Cell dest) {
-
-         boolean test = false;
-         Cell[]test2 = null;
-         try {
-             test2 = elephant.way(source, dest);
-             test = true;
-         } catch (ImposibleMoveException e) {
-             e.printStackTrace();
-         } catch (OccupiedWayException o) {
-             o.printStackTrace();
-         }
-        System.out.println(test);
-        return test;
-    }
-
-
-    public static void main(String[] args) throws FigureNotFoundException, OccupiedWayException, ImposibleMoveException {
-        Board board = new Board();
-        board.fillFigures();
-        board.coordinat();
-        board.move(source, dest);
-        elephant.copy(dest);
-        System.out.println("Фигура перемещена в ячейку по координатм  Cell dest " + dest.coordX() + " " + dest.coordY());
-    }
-}
