@@ -1,6 +1,6 @@
 package ru.job4j.start;
 
-// класс реализует собственное исключение
+// создал свое  собственное исключение
 
 public class OccupiedWayException extends Exception {
     public OccupiedWayException() {

@@ -1,8 +1,7 @@
 package ru.job4j.start;
-
+//шахматная доска
 public class Board  {
 
-  //  В данном классе реализовал движение слона из левого нижнего угла доски в правый верхний угол шахматной доски
 
     private Cell source;
     private Cell dest;

@@ -1,10 +1,6 @@
 package ru.job4j.start;
-import ru.job4j.start.Board;
 
-//Класс создает фигуру слон
-
-
-
+// класс создает фигуру слона и реализует его движение по диагонали
 public class Elephant extends Figure {
 
     private Cell position;

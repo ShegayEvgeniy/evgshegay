@@ -1,6 +1,7 @@
 package ru.job4j.start;
 
-// Класс реализует собственное исключение
+//Создал свое  собственное исключение
+
 public class FigureNotFoundException extends Exception {
     public FigureNotFoundException() {
     }

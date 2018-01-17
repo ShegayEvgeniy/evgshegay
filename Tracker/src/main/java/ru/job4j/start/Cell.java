@@ -1,5 +1,7 @@
 package ru.job4j.start;
 
+// класс создает ячейку с координатами
+
 public class Cell {
     private int x;
     private int y;
