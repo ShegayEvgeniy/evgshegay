@@ -1,10 +1,10 @@
 package ru.job4j.start;
 
-//Абстрактный класс на его сонове создаем фигуру слон
+//Абстрактный класс на его основе  создаем фигуру слон ,которую создаем в классе слон
 
 public abstract class Figure  {
 
-   private  Cell position;
+   private final Cell position;
 
 
     public Figure(Cell position) {

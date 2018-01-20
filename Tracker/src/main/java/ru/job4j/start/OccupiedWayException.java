@@ -1,6 +1,6 @@
 package ru.job4j.start;
 
-// создал свое  собственное исключение
+// создал свое  собственное исключение - путь занят другими фигурами
 
 public class OccupiedWayException extends Exception {
     public OccupiedWayException() {

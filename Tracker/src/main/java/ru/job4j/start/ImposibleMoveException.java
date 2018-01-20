@@ -1,6 +1,6 @@
 package ru.job4j.start;
 
-//Создал свое  собственное исключение
+//Создал свое  собственное исключение реализует исключение типа движение фигуры не возможно
 
 public class ImposibleMoveException extends Exception {
     public ImposibleMoveException() {

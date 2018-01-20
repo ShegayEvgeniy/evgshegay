@@ -1,5 +1,6 @@
 package ru.job4j.start;
-//шахматная доска
+
+// класс реализует шахматную доску с фигурой слон
 public class Board  {
 
 
@@ -19,7 +20,7 @@ public class Board  {
         if (figures[a][b] != null) {
             tmp = true;
         } else {
-            new  FigureNotFoundException();
+           throw  new  FigureNotFoundException();
         }
         return tmp;
     }
@@ -56,14 +57,10 @@ public class Board  {
         } catch (ImposibleMoveException i) {
             System.out.println("The move is impossible");
         }
-          for (Cell cell: test) {
-              if (cell == null) {
-                  elephant.copy(dest);
-                  testCondition = true;
-                  break;
-              }
-          }
-          return testCondition;
+
+        elephant.copy(dest);
+        testCondition = true;
+        return testCondition;
 
         }
 
