@@ -18,6 +18,16 @@ public class Cell {
     public int coordY() {
         return this.y;
     }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getX() {
+
+        return x;
+    }
+
 }
 
 

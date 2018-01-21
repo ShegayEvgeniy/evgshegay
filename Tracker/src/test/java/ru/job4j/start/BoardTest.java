@@ -14,7 +14,11 @@ public class BoardTest {
          Figure[][]figures = new Figure[8][8];
          Figure elephant = new Elephant(source);
          Board board = new Board(source, dest, figures, elephant);
-         board.fillFigures(0, 0);
+         try {
+             board.fillFigures(0, 0);
+         } catch (FigureNotFoundException f) {
+             System.out.println("The figure is not found");
+         }
          boolean two = board.move(source, dest);
          boolean one = true;
          assertThat(true, is(two));

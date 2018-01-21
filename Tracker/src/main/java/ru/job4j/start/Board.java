@@ -9,19 +9,27 @@ public class Board  {
     private  Figure[][] figures;
     private Figure elephant;
 
-    public void fillFigures(int i, int j) {
-        figures[i][j] = elephant; //добавили слона в массив
+    public Figure[][] fillFigures(int i, int j) throws FigureNotFoundException {
+
+        figures[i][j] = elephant;
+        if (figures [i][j] == elephant) {
+            System.out.println("");
+        } else {
+            throw  new FigureNotFoundException();
+        }
+        return figures;
     }
 
     public boolean testArray(Cell source) throws FigureNotFoundException {
         int a = source.coordX();
         int b = source.coordY();
         boolean tmp = false;
-        if (figures[a][b] != null) {
-            tmp = true;
-        } else {
-           throw  new  FigureNotFoundException();
-        }
+            if (fillFigures(a, b) != null) {
+                tmp = true;
+            } else {
+                throw new FigureNotFoundException();
+            }
+
         return tmp;
     }
 
@@ -39,16 +47,6 @@ public class Board  {
         int two = source.coordX();
         Cell[]test = new Cell[8];
         boolean testCondition = false;
-
-        try {
-        if (testArray(source)) {
-            System.out.println(" ");
-        }
-        } catch (FigureNotFoundException f) {
-            System.out.println(" ");
-            }
-
-
 
         try {
              test = elephant.way(source, dest);
