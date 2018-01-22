@@ -3,8 +3,6 @@ package ru.job4j.start;
 
 public class Elephant extends Figure implements Comparable {
 
-    private Cell position;
-
     private Cell[] array = new Cell[8];
 
     public Elephant(Cell position) {
@@ -16,67 +14,70 @@ public class Elephant extends Figure implements Comparable {
     public Cell[] way(Cell source, Cell dest) throws ImposibleMoveException, OccupiedWayException {
 
         if (compareTo(source, dest) == 0) {
-            if (source.getX() == dest.getY() && source.getX() == 0) {       // белый слон двигается из позиции 0-0 вниз по главной диагонали
-                while (source.coordX() < dest.coordX() && source.coordY() < dest.coordY()) {
+            if (compareTo(source,  dest) == 0) {
+                if (source.getX() == dest.getY() && source.getX() == 0) {       // белый слон двигается из позиции 0-0 вниз по главной диагонали
+                    while (source.coordX() < dest.coordX() && source.coordY() < dest.coordY()) {
+                        returnArrayCell(source);
+                    }
+                }
+            }
+
+
+            if (compareTo(source, dest) == 0 && source.getX() != 0) {         // белый слон движется по главной диагонали из позиции отличной от 0-0 ячейки шахматной доски
+                while (source.coordX() <= 7) {
                     returnArrayCell(source);
                 }
             }
-        }
 
+            if (compareTo(source, dest) == 0) {               // определяем положение слона на доске и по его конечной точке реализуем движение
+                int a = source.coordX();
+                a -= 1;
+                int b = source.coordX();
+                b -= 1;
+                int position = 0;
+                array[position] = new Cell(a, b);
+                position++;
+                a--;
+                b--;
+            }
 
-        if (compareTo(source, dest) == 0 && source.getX() != 0) {         // белый слон движется по главной диагонали из позиции отличной от 0-0 ячейки шахматной доски
-            while (source.coordX() <= 7) {
+            if (compareTo(source, dest) == 0) {
+                int a = source.coordX();
+                a -= 1;
+                int b = source.coordY();
+                b += 1;
+                int position = 0;
+                array[position] = new Cell(a, b);
+                position++;
+                a--;
+                b++;
+            }
+
+            if (compareTo(source, dest) == 0) {
+                int a = source.coordX();
+                a += 1;
+                int b = source.coordY();
+                b -= 1;
+                int position = 0;
+                array[position] = new Cell(a, b);
+                position++;
+                a++;
+                b--;
+            }
+
+            if (compareTo(source, dest) == 0) {
                 returnArrayCell(source);
             }
-        }
 
-        if (compareTo(source, dest) == 0) {               // определяем положение слона на доске и по его конечной точке реализуем движение
-            int a = source.coordX();
-            a -= 1;
-            int b = source.coordX();
-            b -= 1;
-            int position = 0;
-            array[position] = new Cell(a, b);
-            position++;
-            a--;
-            b--;
-        }
 
-        if (compareTo(source, dest) == 0) {
-            int a = source.coordX();
-            a -= 1;
-            int b = source.coordY();
-            b += 1;
-            int position = 0;
-            array[position] = new Cell(a, b);
-            position++;
-            a--;
-            b++;
-        }
+            for (Cell cell : array) {
+                if (cell == source) {
+                    throw new OccupiedWayException();
+                }
 
-        if (compareTo(source, dest) == 0) {
-            int a = source.coordX();
-            a += 1;
-            int b = source.coordY();
-            b -= 1;
-            int position = 0;
-            array[position] = new Cell(a, b);
-            position++;
-            a++;
-            b--;
-        }
-
-        if (compareTo(source, dest) == 0) {
-           returnArrayCell(source);
-        }
-
-        for (Cell cell : array) {
-            if (cell == source) {
-                throw new OccupiedWayException();
-            } else {
-                throw new ImposibleMoveException();
             }
-
+        }  else {
+            throw  new  ImposibleMoveException();
         }
         return array;
     }
@@ -93,19 +94,19 @@ public class Elephant extends Figure implements Comparable {
             if ((dest.coordX() - source.coordX()) == (dest.coordY() - source.coordY())) {
                 tmp = 0;
             }
-            if ((source.getX() - dest.getX()) == (source.getY() - dest.getY())) {
+            if ((source.coordX() - dest.coordX()) == (source.coordY() - dest.coordY())) {
                 tmp = 0;
             }
-            if ((dest.getX() < source.getX()) && (dest.getY() < source.getY())) {
+            if ((dest.coordX() < source.coordX()) && (dest.coordY() < source.coordY())) {
                 tmp = 0;
             }
-            if ((dest.getX() < source.getX()) && (dest.getY() > source.getY())) {
+            if ((dest.coordX() < source.coordX()) && (dest.coordY() > source.coordY())) {
                 tmp = 0;
             }
-            if ((dest.getX() > source.getX()) && (dest.getY() > source.getY())) {
+            if ((dest.coordX() > source.coordX()) && (dest.coordY() > source.coordY())) {
                 tmp = 0;
             }
-            if ((dest.getX() > source.getX()) && (dest.getY() < source.getY())) {
+            if ((dest.coordX() > source.coordX()) && (dest.coordY() < source.coordY())) {
                 tmp = 0;
             }
             return tmp;

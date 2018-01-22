@@ -3,16 +3,12 @@ package ru.job4j.start;
 // класс реализует шахматную доску с фигурой слон
 public class Board  {
 
+    private  Figure[][] figures = new Figure[8][8];
 
-    private Cell source;
-    private Cell dest;
-    private  Figure[][] figures;
-    private Figure elephant;
+    public Figure[][] fillFigures(int i, int j, Figure figure) throws FigureNotFoundException {
 
-    public Figure[][] fillFigures(int i, int j) throws FigureNotFoundException {
-
-        figures[i][j] = elephant;
-        if (figures [i][j] == elephant) {
+        figures[i][j] = figure;
+        if (figures [i][j] == figure) {
             System.out.println("");
         } else {
             throw  new FigureNotFoundException();
@@ -24,24 +20,20 @@ public class Board  {
         int a = source.coordX();
         int b = source.coordY();
         boolean tmp = false;
-            if (fillFigures(a, b) != null) {
+            if ((figures[a][b]) != null) {
                 tmp = true;
             } else {
                 throw new FigureNotFoundException();
             }
-
         return tmp;
     }
 
-    public Board(Cell source, Cell dest, Figure[][] figures, Figure elephant) {
-        this.source = source;
-        this.dest = dest;
-        this.figures = figures;
-        this.elephant = elephant;
+    public Board() {
+
     }
 
 
-    public boolean move(Cell source, Cell dest)  {
+    public boolean move(Cell source, Cell dest, Figure figure)  {
 
         int one = source.coordX();
         int two = source.coordX();
@@ -49,20 +41,16 @@ public class Board  {
         boolean testCondition = false;
 
         try {
-             test = elephant.way(source, dest);
+             test = figure.way(source, dest);
         } catch (OccupiedWayException o) {
             System.out.println("The way is occupied");
         } catch (ImposibleMoveException i) {
             System.out.println("The move is impossible");
         }
-
-        elephant.copy(dest);
+        figure.copy(dest);
         testCondition = true;
         return testCondition;
-
         }
-
-
     }
 
 
