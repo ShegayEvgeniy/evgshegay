@@ -4,6 +4,7 @@ package ru.job4j.collections;
 import org.junit.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
@@ -54,6 +55,28 @@ public class ConvertationTest {
         List<Integer> test = new ArrayList<>();
          test = convertation.convert(Arrays.asList(a, b));
          assertThat(test, is(expect));
+    }
+
+    @Test
+    public void test4() {
+        User user1 = new User("Jack", "New York", 11);
+        User user2 = new User("John", "Mexico", 122);
+        User user3 = new User("Stefan", "Mistic Falls", 13);
+        User user4 = new User("Daemon", "Mistic Falls", 33);
+        List<User> user = new ArrayList<>();
+        user.add(user1);
+        user.add(user2);
+        user.add(user3);
+        user.add(user4);
+        UserConvert userConvert = new UserConvert();
+        HashMap<Integer, User> result = new HashMap<>();
+        result = userConvert.process(user);
+        HashMap<Integer, User> expect = new HashMap<>();
+        expect.put(11, user1);
+        expect.put(122, user2);
+        expect.put(13, user3);
+        expect.put(33, user4);
+        assertThat(result, is(expect));
     }
 
 }
