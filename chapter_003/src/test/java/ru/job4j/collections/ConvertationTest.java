@@ -1,15 +1,16 @@
 package ru.job4j.collections;
 
-import static org.junit.Assert.*;
-import org.junit.Test;
 
+import org.junit.Test;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 public class ConvertationTest {
+
     @Test
     public void test1() {
         int[][] test = new int[][]  {{1, 2, 3}, {4, 5, 6}, {7, 8, 9}};
@@ -39,6 +40,20 @@ public class ConvertationTest {
         assertThat(tmp, is(expected));
     }
 
-
+    @Test
+    public void test3() {
+        int[] a = {1, 2, 3};
+        int[] b = {4, 5, 6, 7};
+        List<Integer> expect = new ArrayList<>();
+        int j = 1;
+        for (int i = 0; i < 7; i++) {
+            expect.add(j);
+            j++;
+        }
+        Convertation convertation = new Convertation();
+        List<Integer> test = new ArrayList<>();
+         test = convertation.convert(Arrays.asList(a, b));
+         assertThat(test, is(expect));
+    }
 
 }
