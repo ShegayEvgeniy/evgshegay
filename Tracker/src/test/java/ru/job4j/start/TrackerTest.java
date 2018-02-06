@@ -3,6 +3,10 @@ package ru.job4j.start;
 
 import org.junit.Test;
 import ru.job4j.models.Item;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
@@ -12,9 +16,12 @@ public class TrackerTest {
     @Test
     public void addTest() {
         Tracker tracker = new Tracker();
+        List<Item> items = new ArrayList<>();
         Item item = new Item("item1", "desc1", 12);
-        tracker.add(item);
-        assertThat(tracker.getAll()[0], is(item));
+        //items.add(item);
+        Item item2 = tracker.add(item);
+        items = tracker.findByName("item1");
+        assertThat(items.get(0), is(item2));
     }
 
     @Test
@@ -25,7 +32,9 @@ public class TrackerTest {
         Item next = new Item("item3", "desc3", 14);
         tracker.add(next);
         tracker.delete(item.getId());
-        assertThat(tracker.getAll()[0], is(next));
+        List<Item> tmp4 = new ArrayList<>();
+        tmp4 = tracker.findByName("item3");
+        assertThat(tmp4.get(0), is(next));
     }
 
     @Test
@@ -37,12 +46,14 @@ public class TrackerTest {
         tracker.add(second);
         Item third = new Item("item5", "desc5", 16);
         tracker.add(third);
-        Item[]array = new Item[2];
+       // Item[]array = new Item[2];
+        List<Item> array = new ArrayList<>();
         array = tracker.findAll(tracker.getAll());
-        Item[] expect = new Item[3];
-        expect[0] = item;
-        expect[1] = second;
-        expect[2] = third;
+        //Item[] expect = new Item[3];
+        List<Item> expect = new ArrayList<>();
+        expect.add(item);
+        expect.add(second);
+        expect.add(third);
         assertThat(array, is(expect));
     }
 
@@ -56,10 +67,12 @@ public class TrackerTest {
         Item third = new Item("test", "desc8", 19);
         tracker.add(third);
         String key = "test";
-        Item[] res = tracker.findByName(key);
-        Item[] expect = new Item[2];
-        expect[0] = item;
-        expect[1] = third;
+        List<Item> res = new ArrayList<>();
+         res = tracker.findByName(key);
+        //Item[] expect = new Item[2];
+        List<Item> expect = new ArrayList<>();
+        expect.add(item);
+        expect.add(third);
         assertThat(res, is(expect));
 
     }
@@ -72,7 +85,7 @@ public class TrackerTest {
         Item item2 = new Item("test3", "desc3", 22);
         item2.setId(item.getId());
         tracker.replace(item.getId(), item2);
-        assertThat(tracker.findById(item.getId()).getName(), is("test3"));
+        assertThat(tracker.findById(item.getId()).getName(), is(item2.getName()));
     }
 
     @Test
@@ -94,9 +107,10 @@ public class TrackerTest {
         tracker.add(item);
         Item two = new Item("two1", "desc2", 26);
         tracker.add(two);
-        Item[] expect = new Item[2];
-        expect[0] = item;
-        expect[1] = two;
+        //Item[] expect = new Item[2];
+        List<Item> expect = new ArrayList<>();
+        expect.add(item);
+        expect.add(two);
         assertThat(tracker.getAll(), is(expect));
 
 

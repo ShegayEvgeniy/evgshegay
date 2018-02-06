@@ -2,22 +2,25 @@
 package ru.job4j.start;
 
 
+import java.util.List;
 
 public class StartUI {
 	
 
 	private Input input;
-	private int[] ranges = new  int[6];
+	private Tracker tracker;
+	private int[] ranges = new  int[8];
 
 
-      public StartUI(Input input) {
+      public StartUI(Input input, Tracker tracker) {
  	   this.input = input;
+ 	   this.tracker = tracker;
      }
 
      public void fillRanges(MenuTracker menu) {  // методо заполняет массив ranges
 
-		  UserAction[] tmp = menu.getActions();
-		 for (int i = 0; i < tmp.length; i++) {
+		  List<UserAction> tmp = menu.getActions();
+		 for (int i = 0; i < tmp.size(); i++) {
 			 ranges[i] = i;
 		 }
 	 }
@@ -27,6 +30,24 @@ public class StartUI {
       	Tracker tracker = new Tracker();
       	MenuTracker menu = new MenuTracker(this.input, tracker);
       	menu.fillActions();
+      	UserAction deleteAction = new UserAction() {
+
+			@Override
+			public int key() {
+				return 3;
+			}
+
+			@Override
+			public void execute(Input input, Tracker tracker) {
+             //todo
+			}
+
+			@Override
+			public String info() {
+				return "Delete";
+			}
+		};
+      	menu.addActions(deleteAction);
       	fillRanges(menu);
       	do {
       		menu.show();
@@ -36,8 +57,7 @@ public class StartUI {
 	 }
 
 	public static void main(String[] args) {
-		Input input = new ValidateInput();
-		new StartUI(input).init();
+		new StartUI(new ValidateInput(new ConsoleInput()), new Tracker()).init();
 	}
 
 }
